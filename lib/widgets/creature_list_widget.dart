@@ -10,7 +10,8 @@ class CreatureListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: 3,
+      crossAxisCount: 5,
+      shrinkWrap: true,
       children: buildCreatureCardList(),
     );
   }

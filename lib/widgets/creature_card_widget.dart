@@ -10,15 +10,29 @@ class CreatureCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(creature.name),
-          if (creature.image != null)
-            Image.memory(base64Decode(creature.image!)),
-          if (creature.description != null) Text(creature.description!)
-        ],
+    return SizedBox(
+      child: Card(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ListTile(
+                title: Center(
+                  child: Text(creature.name),
+                ),
+                titleTextStyle: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                )),
+            if (creature.image != null)
+              Expanded(
+                child: Image.memory(
+                  base64Decode(creature.image!),
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
