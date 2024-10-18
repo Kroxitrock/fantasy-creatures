@@ -11,8 +11,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-          Obx(() => CreatureListWidget(creatureController.creatures.toList())),
+      body: Container(
+        alignment: Alignment.topCenter,
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 1500),
+          child: Obx(
+              () => CreatureListWidget(creatureController.creatures.toList())),
+        ),
+      ),
     );
   }
 }

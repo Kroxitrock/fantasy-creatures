@@ -9,8 +9,17 @@ class CreatureListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    int columns = 5;
+
+    if (width < 641) {
+      columns = 1;
+    } else if (width < 1008) {
+      columns = 3;
+    }
+
     return GridView.count(
-      crossAxisCount: 5,
+      crossAxisCount: columns,
       shrinkWrap: true,
       children: buildCreatureCardList(),
     );

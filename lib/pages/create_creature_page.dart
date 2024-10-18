@@ -56,7 +56,7 @@ class CreateCreaturePage extends StatelessWidget {
   Future<String?> getImage() async {
     final image = _formKey.currentState!.value['image'];
 
-    if (image[0] == null) {
+    if (image == null) {
       return null;
     }
 
