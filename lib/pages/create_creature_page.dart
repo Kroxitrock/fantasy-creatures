@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:fantasy_creatures/controllers/creature_controller.dart';
+import 'package:fantasy_creatures/models/armor.dart';
 import 'package:fantasy_creatures/models/creature.dart';
 import 'package:fantasy_creatures/models/weapon.dart';
 import 'package:fantasy_creatures/widgets/navigation_scaffold_widget.dart';
@@ -18,6 +19,7 @@ class CreateCreaturePage extends StatelessWidget {
   final creatureController = Get.find<CreatureController>();
 
   final List<Weapon> confirmedWeapons = [];
+  final List<ArmorType> confirmedArmor = [];
 
   CreateCreaturePage({super.key});
 
@@ -80,6 +82,24 @@ class CreateCreaturePage extends StatelessWidget {
                       .map((weapon) => MultiSelectItem(weapon, weapon.name))
                       .toList(),
                 ),
+                MultiSelectDialogField(
+                  dialogWidth: 150,
+                  dialogHeight: height > 300 ? 300 : height,
+                  title: const Text("Select armor types"),
+                  buttonText: const Text(
+                    "Armor types of the creature",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  onConfirm: confirmArmor,
+                  chipDisplay: MultiSelectChipDisplay<ArmorType>(
+                    chipColor: Colors.amber,
+                    textStyle: const TextStyle(color: Colors.black),
+                  ),
+                  items: ArmorType.values
+                      .map((armorType) =>
+                          MultiSelectItem(armorType, armorType.name))
+                      .toList(),
+                ),
                 ElevatedButton(
                   onPressed: createCreature,
                   child: const Text("Create"),
@@ -93,6 +113,11 @@ class CreateCreaturePage extends StatelessWidget {
     );
   }
 
+  confirmArmor(List<ArmorType> armor) {
+    confirmedArmor.clear();
+    confirmedArmor.addAll(armor);
+  }
+
   confirmWeapons(List<Weapon> weapons) {
     confirmedWeapons.clear();
     confirmedWeapons.addAll(weapons);
@@ -104,7 +129,8 @@ class CreateCreaturePage extends StatelessWidget {
           _formKey.currentState!.value['name'],
           await getImage(),
           _formKey.currentState!.value['description'],
-          confirmedWeapons));
+          confirmedWeapons,
+          confirmedArmor));
       _formKey.currentState?.reset();
     }
   }
