@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:fantasy_creatures/controllers/creature_controller.dart';
 import 'package:fantasy_creatures/models/armor.dart';
 import 'package:fantasy_creatures/models/creature.dart';
+import 'package:fantasy_creatures/models/creature_size.dart';
 import 'package:fantasy_creatures/models/weapon.dart';
 import 'package:fantasy_creatures/widgets/navigation_scaffold_widget.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,21 @@ class CreateCreaturePage extends StatelessWidget {
                   ),
                   maxLines: 3,
                   maxLength: 255,
+                ),
+                FormBuilderDropdown(
+                  name: "size",
+                  decoration: const InputDecoration(
+                    label: Text("Size"),
+                  ),
+                  items: CreatureSize.values
+                      .map(
+                        (creatureSize) => DropdownMenuItem(
+                          value: creatureSize,
+                          child: Text(creatureSize.name),
+                        ),
+                      )
+                      .toList(),
+                  validator: FormBuilderValidators.required(),
                 ),
                 MultiSelectDialogField(
                   dialogWidth: 150,
@@ -129,6 +145,7 @@ class CreateCreaturePage extends StatelessWidget {
           _formKey.currentState!.value['name'],
           await getImage(),
           _formKey.currentState!.value['description'],
+          _formKey.currentState!.value['size'],
           confirmedWeapons,
           confirmedArmor));
       _formKey.currentState?.reset();
