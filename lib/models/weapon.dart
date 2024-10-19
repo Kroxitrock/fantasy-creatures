@@ -1,4 +1,4 @@
-enum Weapon implements Comparable<Weapon> {
+enum Weapon {
   sword(name: "Sword", minDamage: 2, maxDamage: 5),
   axe(name: "Axe", minDamage: 3, maxDamage: 4),
   spear(name: "Spear", minDamage: 1, maxDamage: 6),
@@ -15,10 +15,6 @@ enum Weapon implements Comparable<Weapon> {
   final String name;
   final int minDamage;
   final int maxDamage;
-
-  @override
-  int compareTo(Weapon other) =>
-      minDamage + maxDamage - other.minDamage - other.maxDamage;
 
   static Weapon fromString(String weaponString) {
     return Weapon.values
