@@ -22,7 +22,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       getPages: [
-        GetPage(name: '/', page: () => HomePage()),
+        GetPage(name: '/', page: () => CreateCreaturePage()),
         GetPage(name: '/create', page: () => CreateCreaturePage())
       ],
     );

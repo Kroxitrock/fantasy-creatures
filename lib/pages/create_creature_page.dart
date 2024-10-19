@@ -17,30 +17,61 @@ class CreateCreaturePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FormBuilder(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FormBuilderTextField(
-                  name: "name",
-                  decoration: const InputDecoration(
-                      label: Text("Name of the creature")),
-                  validator: FormBuilderValidators.required(),
+      body: FormBuilder(
+        key: _formKey,
+        child: Container(
+          alignment: Alignment.topCenter,
+          child: Container(
+            constraints: const BoxConstraints(
+              maxWidth: 1500,
+            ),
+            child: Card(
+              margin: const EdgeInsets.all(10),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    const ListTile(
+                      title: Center(
+                        child: Text("Create a new Creature"),
+                      ),
+                      titleTextStyle: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    FormBuilderTextField(
+                      name: "name",
+                      decoration: const InputDecoration(
+                          label: Text("Name of the creature")),
+                      validator: FormBuilderValidators.required(),
+                    ),
+                    FormBuilderImagePicker(
+                      name: "image",
+                      maxImages: 1,
+                      availableImageSources: const [ImageSourceOption.gallery],
+                    ),
+                    FormBuilderTextField(
+                      name: "description",
+                      decoration: const InputDecoration(
+                        label: Text("Description of the creature"),
+                      ),
+                      maxLines: 3,
+                      maxLength: 255,
+                    ),
+                    ElevatedButton(
+                      onPressed: createCreature,
+                      child: const Text("Create"),
+                    )
+                  ],
                 ),
-                FormBuilderImagePicker(
-                  name: "image",
-                  maxImages: 1,
-                ),
-                FormBuilderTextField(
-                  name: "description",
-                  decoration: const InputDecoration(
-                      label: Text("Description of the creature")),
-                ),
-                ElevatedButton(
-                    onPressed: createCreature, child: const Text("Create"))
-              ],
-            )));
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   void createCreature() async {
