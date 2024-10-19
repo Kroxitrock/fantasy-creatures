@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:fantasy_creatures/controllers/creature_controller.dart';
 import 'package:fantasy_creatures/models/creature.dart';
-import 'package:fantasy_creatures/widgets/navigation_scaffold.dart';
+import 'package:fantasy_creatures/widgets/navigation_scaffold_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_image_picker/form_builder_image_picker.dart';
@@ -17,7 +17,7 @@ class CreateCreaturePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationScaffold(
+    return NavigationScaffoldWidget(
       FormBuilder(
         key: _formKey,
         child: Card(
@@ -64,6 +64,7 @@ class CreateCreaturePage extends StatelessWidget {
           ),
         ),
       ),
+      1,
     );
   }
 
