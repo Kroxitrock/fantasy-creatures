@@ -10,8 +10,25 @@ class Creature {
   List<Weapon> weapons;
   List<ArmorType> armor;
 
+  int get armorClass {
+    var armorClass = 0;
+
+    for (final armorType in armor) {
+      armorClass += armorType.armorValue;
+    }
+
+    return armorClass;
+  }
+
   Creature(this.name, this.image, this.description, this.size, this.weapons,
       this.armor);
+
+  Creature.unknown()
+      : name = "Uknown",
+        size = CreatureSize.small,
+        weapons = [],
+        armor = [];
+
   Creature.fromJson(Map jsonObject)
       : name = "",
         size = CreatureSize.small,
@@ -44,5 +61,14 @@ class Creature {
       "weapons": weapons.map((weapon) => weapon.toString()).toList(),
       "armor": armor.map((armorType) => armorType.toString()).toList(),
     };
+  }
+
+  void copy(Creature other) {
+    name = other.name;
+    image = other.image;
+    description = other.description;
+    size = other.size;
+    weapons = other.weapons;
+    armor = other.armor;
   }
 }

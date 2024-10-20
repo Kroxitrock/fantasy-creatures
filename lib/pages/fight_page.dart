@@ -1,26 +1,36 @@
+import 'package:fantasy_creatures/controllers/fight_controller.dart';
 import 'package:fantasy_creatures/widgets/fighting_creature_widget.dart';
 import 'package:fantasy_creatures/widgets/navigation_scaffold_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class FightPage extends StatelessWidget {
-  const FightPage({super.key});
+  final fightController = Get.find<FightController>();
+
+  FightPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return NavigationScaffoldWidget(
-        ListView(
+      Obx(
+        () => ListView(
           children: [
             Row(
               children: [
-                FightingCreatureWidget(),
-                ElevatedButton(onPressed: fight, child: const Text("Fight")),
-                FightingCreatureWidget(),
+                FightingCreatureWidget(1),
+                ElevatedButton(
+                    onPressed: fightController.fight,
+                    child: const Text("Fight")),
+                FightingCreatureWidget(2),
               ],
-            )
+            ),
+            ...fightController.fightRecords.map((record) => Card(
+                  child: Text(record),
+                ))
           ],
         ),
-        1);
+      ),
+      1,
+    );
   }
-
-  void fight() {}
 }

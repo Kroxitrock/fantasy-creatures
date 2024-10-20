@@ -1,4 +1,5 @@
 import 'package:fantasy_creatures/controllers/creature_controller.dart';
+import 'package:fantasy_creatures/controllers/fight_controller.dart';
 import 'package:fantasy_creatures/pages/create_creature_page.dart';
 import 'package:fantasy_creatures/pages/fight_page.dart';
 import 'package:fantasy_creatures/pages/home_page.dart';
@@ -12,6 +13,7 @@ Future<void> main() async {
   await Hive.openBox("storage");
   Get.lazyPut<CreatureService>(() => CreatureService());
   Get.lazyPut<CreatureController>(() => CreatureController());
+  Get.lazyPut<FightController>(() => FightController());
 
   runApp(const MainApp());
 }
@@ -24,7 +26,7 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       getPages: [
         GetPage(name: '/', page: () => HomePage()),
-        GetPage(name: '/fight', page: () => const FightPage()),
+        GetPage(name: '/fight', page: () => FightPage()),
         GetPage(name: '/create', page: () => CreateCreaturePage())
       ],
     );
