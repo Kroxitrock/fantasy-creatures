@@ -125,7 +125,7 @@ class CreateCreaturePage extends StatelessWidget {
           ),
         ),
       ),
-      1,
+      2,
     );
   }
 

@@ -1,5 +1,6 @@
 import 'package:fantasy_creatures/controllers/creature_controller.dart';
 import 'package:fantasy_creatures/pages/create_creature_page.dart';
+import 'package:fantasy_creatures/pages/fight_page.dart';
 import 'package:fantasy_creatures/pages/home_page.dart';
 import 'package:fantasy_creatures/services/creature_service.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       getPages: [
         GetPage(name: '/', page: () => HomePage()),
+        GetPage(name: '/fight', page: () => const FightPage()),
         GetPage(name: '/create', page: () => CreateCreaturePage())
       ],
     );

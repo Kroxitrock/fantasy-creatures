@@ -34,6 +34,7 @@ class NavigationScaffoldWidget extends StatelessWidget {
       actions.addAll(
         [
           const NavigationButtonWidget("Home", "/"),
+          const NavigationButtonWidget("Fight", "/fight"),
           const NavigationButtonWidget("Create Creature", "/create")
         ],
       );
@@ -65,6 +66,12 @@ class NavigationScaffoldWidget extends StatelessWidget {
           ),
         ),
         BottomNavigationBarItem(
+          label: "Fight",
+          icon: Icon(
+            Icons.bolt,
+          ),
+        ),
+        BottomNavigationBarItem(
           label: "Create",
           icon: Icon(
             Icons.add,
@@ -80,6 +87,9 @@ class NavigationScaffoldWidget extends StatelessWidget {
         Get.toNamed("/");
         break;
       case 1:
+        Get.toNamed("/fight");
+        break;
+      case 2:
         Get.toNamed("/create");
         break;
     }
