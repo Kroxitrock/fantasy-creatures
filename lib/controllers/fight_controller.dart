@@ -72,12 +72,12 @@ class FightController {
           leftFighterHealth, rightFighterHealth);
     }
 
-    if (leftFighterHealth < 0 && rightFighterHealth < 0) {
+    if (leftFighterHealth == 0 && rightFighterHealth == 0) {
       drawMessage();
       return;
     }
 
-    if (leftFighterHealth < 0) {
+    if (leftFighterHealth == 0) {
       rightVictoryMessage();
       return;
     }
@@ -106,7 +106,7 @@ class FightController {
     int rightFighterHealth,
   ) {
     fightRecords.add(
-        "Round $roundNumber: The ${fighterOne.value!.name} on the left dealt $leftFighterHit damage, leaving their opponent with $rightFighterHealth. For that, they recieved $rightFighterHit damage from the ${fighterOne.value!.name} on the right, leaving them with $leftFighterHealth health points.");
+        "Round $roundNumber: The ${fighterOne.value!.name} on the left dealt $leftFighterHit damage, leaving their opponent with $rightFighterHealth. For that, they recieved $rightFighterHit damage from the ${fighterTwo.value!.name} on the right, leaving them with $leftFighterHealth health points.");
   }
 
   drawMessage() {

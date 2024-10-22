@@ -5,13 +5,13 @@ import 'package:fantasy_creatures/controllers/fight_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class FightingCreatureWidget extends StatelessWidget {
+class FightingCreatureCardWidget extends StatelessWidget {
   final creatureController = Get.find<CreatureController>();
   final fightController = Get.find<FightController>();
 
   final int fighterNumber;
 
-  FightingCreatureWidget(this.fighterNumber, {super.key});
+  FightingCreatureCardWidget(this.fighterNumber, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,9 @@ class FightingCreatureWidget extends StatelessWidget {
                 )
                 .toList(),
           ),
-          Obx(getFighterImage),
+          Expanded(
+            child: Obx(getFighterImage),
+          ),
         ],
       ),
     );
@@ -40,7 +42,10 @@ class FightingCreatureWidget extends StatelessWidget {
     final fighter = fightController.getFighter(fighterNumber);
 
     if (fighter.image != null) {
-      return Image.memory(base64Decode(fighter.image!));
+      return Image.memory(
+        base64Decode(fighter.image!),
+        fit: BoxFit.contain,
+      );
     }
 
     return const Card(

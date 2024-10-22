@@ -11,9 +11,9 @@ import 'package:hive_ce_flutter/hive_flutter.dart';
 Future<void> main() async {
   await Hive.initFlutter();
   await Hive.openBox("storage");
-  Get.lazyPut<CreatureService>(() => CreatureService());
-  Get.lazyPut<CreatureController>(() => CreatureController());
-  Get.lazyPut<FightController>(() => FightController());
+  Get.lazyPut<CreatureService>(() => CreatureService(), fenix: true);
+  Get.lazyPut<CreatureController>(() => CreatureController(), fenix: true);
+  Get.lazyPut<FightController>(() => FightController(), fenix: true);
 
   runApp(const MainApp());
 }
