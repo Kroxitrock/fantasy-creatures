@@ -11,6 +11,9 @@ class CreatureController {
     creatures.value = creatureService.creatures;
   }
 
+  Creature? getCreature(String uuid) =>
+      creatures.firstWhereOrNull((creature) => creature.uuid == uuid);
+
   void addCreature(Creature creature) {
     creatures.add(creature);
     creatureService.addCreature(creature);

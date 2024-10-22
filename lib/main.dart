@@ -29,8 +29,7 @@ class MainApp extends StatelessWidget {
         GetPage(name: '/', page: () => HomePage()),
         GetPage(name: '/fight', page: () => FightPage()),
         GetPage(name: '/create', page: () => CreateCreaturePage()),
-        GetPage(
-            name: '/creature/:uuid', page: () => const CreatureDetailsPage())
+        GetPage(name: '/creature/:uuid', page: () => CreatureDetailsPage())
       ],
     );
   }
