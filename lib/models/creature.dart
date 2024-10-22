@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fantasy_creatures/models/armor.dart';
 import 'package:fantasy_creatures/models/creature_size.dart';
 import 'package:fantasy_creatures/models/weapon.dart';
@@ -41,7 +43,7 @@ class Creature {
         size = CreatureSize.small,
         weapons = [],
         armor = [] {
-    uuid = uuidGenerator.v4();
+    uuid = jsonObject["uuid"];
     name = jsonObject["name"];
     image = jsonObject["image"];
     description = jsonObject["description"];

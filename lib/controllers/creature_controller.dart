@@ -18,4 +18,9 @@ class CreatureController {
     creatures.add(creature);
     creatureService.addCreature(creature);
   }
+
+  delete(Creature creature) {
+    creatures.remove(creature);
+    creatureService.removeCreature(creature);
+  }
 }

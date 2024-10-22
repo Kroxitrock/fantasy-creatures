@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:fantasy_creatures/controllers/creature_controller.dart';
+import 'package:fantasy_creatures/models/creature.dart';
 import 'package:fantasy_creatures/widgets/navigation_scaffold_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -90,7 +91,7 @@ class CreatureDetailsPage extends StatelessWidget {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () => print("Delete"),
+                      onPressed: () => deleteCreature(creature),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
                       ),
@@ -109,6 +110,16 @@ class CreatureDetailsPage extends StatelessWidget {
         ),
       ),
       parentSelectedIndex,
+    );
+  }
+
+  deleteCreature(Creature creature) {
+    creatureController.delete(creature);
+    Get.back();
+    Get.snackbar(
+      "Creature Deleted",
+      "Successfully deleted ${creature.name}!",
+      snackPosition: SnackPosition.BOTTOM,
     );
   }
 }

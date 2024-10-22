@@ -16,13 +16,21 @@ class CreatureService {
 
     final Iterable decodedCreatures = jsonDecode(creatureJSON);
 
-    creatures.addAll(List<Creature>.from(
-        decodedCreatures.map((model) => Creature.fromJson(model))));
+    creatures.addAll(
+      List<Creature>.from(
+        decodedCreatures.map((model) => Creature.fromJson(model)),
+      ),
+    );
 
     return creatures;
   }
 
   addCreature(Creature creature) {
     storage.put("creatures", jsonEncode(creatures..add(creature)));
+  }
+
+  void removeCreature(Creature creature) {
+    storage.put("creatures",
+        jsonEncode(creatures.where((c) => creature.uuid != c.uuid).toList()));
   }
 }
