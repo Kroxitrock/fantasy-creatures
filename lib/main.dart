@@ -1,6 +1,6 @@
 import 'package:fantasy_creatures/controllers/creature_controller.dart';
 import 'package:fantasy_creatures/controllers/fight_controller.dart';
-import 'package:fantasy_creatures/pages/create_creature_page.dart';
+import 'package:fantasy_creatures/pages/create_or_update_creature_page.dart';
 import 'package:fantasy_creatures/pages/creature_details_page.dart';
 import 'package:fantasy_creatures/pages/fight_page.dart';
 import 'package:fantasy_creatures/pages/home_page.dart';
@@ -28,7 +28,7 @@ class MainApp extends StatelessWidget {
       getPages: [
         GetPage(name: '/', page: () => HomePage()),
         GetPage(name: '/fight', page: () => FightPage()),
-        GetPage(name: '/create', page: () => CreateCreaturePage()),
+        GetPage(name: '/create', page: () => CreateOrUpdateCreaturePage()),
         GetPage(name: '/creature/:uuid', page: () => CreatureDetailsPage())
       ],
     );
