@@ -36,7 +36,9 @@ class FightPage extends StatelessWidget {
                 ),
                 child: const Text(
                   "Fight",
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
