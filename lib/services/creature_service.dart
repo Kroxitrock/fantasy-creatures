@@ -29,7 +29,16 @@ class CreatureService {
     storage.put("creatures", jsonEncode(creatures..add(creature)));
   }
 
-  void removeCreature(Creature creature) {
+  updateCreature(Creature creature) {
+    final updatedList = creatures;
+
+    updatedList
+        .firstWhere((element) => element.uuid == creature.uuid)
+        .copy(creature);
+    storage.put("creatures", jsonEncode(updatedList));
+  }
+
+  deleteCreature(Creature creature) {
     storage.put("creatures",
         jsonEncode(creatures.where((c) => creature.uuid != c.uuid).toList()));
   }

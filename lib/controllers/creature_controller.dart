@@ -19,8 +19,17 @@ class CreatureController {
     creatureService.addCreature(creature);
   }
 
-  delete(Creature creature) {
+  void updateCreature(Creature creature) {
+    creatures
+        .firstWhere(
+          (element) => element.uuid == creature.uuid,
+        )
+        .copy(creature);
+    creatureService.updateCreature(creature);
+  }
+
+  deleteCreature(Creature creature) {
     creatures.remove(creature);
-    creatureService.removeCreature(creature);
+    creatureService.deleteCreature(creature);
   }
 }

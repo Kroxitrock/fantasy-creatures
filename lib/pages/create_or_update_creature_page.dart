@@ -28,6 +28,15 @@ class CreateOrUpdateCreaturePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
 
+    final creatureToUpdateUuid = Get.arguments;
+    Creature? creatureToUpdate;
+
+    if (creatureToUpdateUuid != null) {
+      creatureToUpdate = creatureController.getCreature(creatureToUpdateUuid);
+      confirmedArmor.addAll(creatureToUpdate!.armor);
+      confirmedWeapons.addAll(creatureToUpdate.weapons);
+    }
+
     return NavigationScaffoldWidget(
       FormBuilder(
         key: _formKey,
@@ -37,11 +46,13 @@ class CreateOrUpdateCreaturePage extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  const ListTile(
+                  ListTile(
                     title: Center(
-                      child: Text("Create a new Creature"),
+                      child: Text(creatureToUpdate != null
+                          ? "Edit Creature"
+                          : "Create a new Creature"),
                     ),
-                    titleTextStyle: TextStyle(
+                    titleTextStyle: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -49,17 +60,26 @@ class CreateOrUpdateCreaturePage extends StatelessWidget {
                   ),
                   FormBuilderTextField(
                     name: "name",
+                    initialValue:
+                        creatureToUpdate != null ? creatureToUpdate.name : '',
                     decoration: const InputDecoration(
                         label: Text("Name of the creature")),
                     validator: FormBuilderValidators.required(),
                   ),
                   FormBuilderImagePicker(
+                    initialValue: creatureToUpdate != null &&
+                            creatureToUpdate.image != null
+                        ? [MemoryImage(base64Decode(creatureToUpdate.image!))]
+                        : [],
                     name: "image",
                     maxImages: 1,
                     availableImageSources: const [ImageSourceOption.gallery],
                   ),
                   FormBuilderTextField(
                     name: "description",
+                    initialValue: creatureToUpdate != null
+                        ? creatureToUpdate.description
+                        : '',
                     decoration: const InputDecoration(
                       label: Text("Description of the creature"),
                     ),
@@ -68,6 +88,8 @@ class CreateOrUpdateCreaturePage extends StatelessWidget {
                   ),
                   FormBuilderDropdown(
                     name: "size",
+                    initialValue:
+                        creatureToUpdate != null ? creatureToUpdate.size : '',
                     decoration: const InputDecoration(
                       label: Text("Size"),
                     ),
@@ -81,7 +103,10 @@ class CreateOrUpdateCreaturePage extends StatelessWidget {
                         .toList(),
                     validator: FormBuilderValidators.required(),
                   ),
-                  MultiSelectDialogField(
+                  MultiSelectDialogField<Weapon>(
+                    initialValue: creatureToUpdate != null
+                        ? creatureToUpdate.weapons
+                        : [],
                     dialogWidth: 150,
                     dialogHeight: height > 300 ? 300 : height,
                     title: const Text("Select weapons"),
@@ -98,7 +123,9 @@ class CreateOrUpdateCreaturePage extends StatelessWidget {
                         .map((weapon) => MultiSelectItem(weapon, weapon.name))
                         .toList(),
                   ),
-                  MultiSelectDialogField(
+                  MultiSelectDialogField<ArmorType>(
+                    initialValue:
+                        creatureToUpdate != null ? creatureToUpdate.armor : [],
                     dialogWidth: 150,
                     dialogHeight: height > 300 ? 300 : height,
                     title: const Text("Select armor types"),
@@ -119,13 +146,15 @@ class CreateOrUpdateCreaturePage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: ElevatedButton(
-                      onPressed: createCreature,
+                      onPressed: () => creatureToUpdate != null
+                          ? updateCreature(creatureToUpdateUuid)
+                          : createCreature(),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.amber,
                       ),
-                      child: const Text(
-                        "Create",
-                        style: TextStyle(
+                      child: Text(
+                        creatureToUpdate != null ? "Edit" : "Create",
+                        style: const TextStyle(
                           color: Colors.black,
                         ),
                       ),
@@ -151,6 +180,25 @@ class CreateOrUpdateCreaturePage extends StatelessWidget {
     confirmedWeapons.addAll(weapons);
   }
 
+  updateCreature(String uuid) async {
+    if (_formKey.currentState!.saveAndValidate()) {
+      creatureController.updateCreature(Creature.withUuid(
+          uuid,
+          _formKey.currentState!.value['name'],
+          await getImage(),
+          _formKey.currentState!.value['description'],
+          _formKey.currentState!.value['size'],
+          confirmedWeapons,
+          confirmedArmor));
+      Get.back();
+      Get.snackbar(
+        "Creature Edited",
+        "Successfully edited ${_formKey.currentState!.value['name']}!",
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
   void createCreature() async {
     if (_formKey.currentState!.saveAndValidate()) {
       creatureController.addCreature(Creature(
@@ -161,6 +209,12 @@ class CreateOrUpdateCreaturePage extends StatelessWidget {
           confirmedWeapons,
           confirmedArmor));
       _formKey.currentState?.reset();
+
+      Get.snackbar(
+        "Creature created",
+        "Successfully created ${_formKey.currentState!.value['name']}!",
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 
@@ -171,8 +225,10 @@ class CreateOrUpdateCreaturePage extends StatelessWidget {
       return null;
     }
 
-    XFile file = image[0];
+    if (image[0].runtimeType == XFile) {
+      return base64Encode(await image[0].readAsBytes());
+    }
 
-    return base64Encode(await file.readAsBytes());
+    return base64Encode(image[0].bytes);
   }
 }

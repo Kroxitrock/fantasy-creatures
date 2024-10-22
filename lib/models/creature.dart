@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:fantasy_creatures/models/armor.dart';
 import 'package:fantasy_creatures/models/creature_size.dart';
 import 'package:fantasy_creatures/models/weapon.dart';
@@ -29,6 +27,9 @@ class Creature {
   Creature(this.name, this.image, this.description, this.size, this.weapons,
       this.armor)
       : uuid = uuidGenerator.v4();
+
+  Creature.withUuid(this.uuid, this.name, this.image, this.description,
+      this.size, this.weapons, this.armor);
 
   Creature.unknown()
       : uuid = uuidGenerator.v4(),

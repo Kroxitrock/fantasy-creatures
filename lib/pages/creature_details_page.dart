@@ -81,7 +81,7 @@ class CreatureDetailsPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      onPressed: () => print("Edit"),
+                      onPressed: () => editCreature(creature),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.amber,
                       ),
@@ -113,8 +113,12 @@ class CreatureDetailsPage extends StatelessWidget {
     );
   }
 
+  editCreature(Creature creature) {
+    Get.toNamed("/create", arguments: creature.uuid);
+  }
+
   deleteCreature(Creature creature) {
-    creatureController.delete(creature);
+    creatureController.deleteCreature(creature);
     Get.back();
     Get.snackbar(
       "Creature Deleted",
