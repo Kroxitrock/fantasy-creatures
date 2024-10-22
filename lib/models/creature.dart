@@ -1,8 +1,12 @@
 import 'package:fantasy_creatures/models/armor.dart';
 import 'package:fantasy_creatures/models/creature_size.dart';
 import 'package:fantasy_creatures/models/weapon.dart';
+import 'package:uuid/uuid.dart';
 
 class Creature {
+  static const uuidGenerator = Uuid();
+
+  String uuid;
   String name;
   String? image;
   String? description;
@@ -21,19 +25,23 @@ class Creature {
   }
 
   Creature(this.name, this.image, this.description, this.size, this.weapons,
-      this.armor);
+      this.armor)
+      : uuid = uuidGenerator.v4();
 
   Creature.unknown()
-      : name = "Uknown",
+      : uuid = uuidGenerator.v4(),
+        name = "Uknown",
         size = CreatureSize.small,
         weapons = [],
         armor = [];
 
   Creature.fromJson(Map jsonObject)
-      : name = "",
+      : uuid = uuidGenerator.v4(),
+        name = "",
         size = CreatureSize.small,
         weapons = [],
         armor = [] {
+    uuid = uuidGenerator.v4();
     name = jsonObject["name"];
     image = jsonObject["image"];
     description = jsonObject["description"];
@@ -54,6 +62,7 @@ class Creature {
 
   Map<String, dynamic> toJson() {
     return {
+      "uuid": uuid,
       "name": name,
       "image": image,
       "description": description,
@@ -64,6 +73,7 @@ class Creature {
   }
 
   void copy(Creature other) {
+    uuid = other.uuid;
     name = other.name;
     image = other.image;
     description = other.description;

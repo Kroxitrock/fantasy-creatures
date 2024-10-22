@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fantasy_creatures/models/creature.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CreatureCardWidget extends StatelessWidget {
   final Creature creature;
@@ -10,27 +11,30 @@ class CreatureCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ListTile(
-              title: Center(
-                child: Text(creature.name),
+    return GestureDetector(
+      onTap: () => Get.toNamed("/creature/${creature.uuid}"),
+      child: Card(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ListTile(
+                title: Center(
+                  child: Text(creature.name),
+                ),
+                titleTextStyle: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                )),
+            if (creature.image != null)
+              Expanded(
+                child: Image.memory(
+                  base64Decode(creature.image!),
+                ),
               ),
-              titleTextStyle: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              )),
-          if (creature.image != null)
-            Expanded(
-              child: Image.memory(
-                base64Decode(creature.image!),
-              ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
