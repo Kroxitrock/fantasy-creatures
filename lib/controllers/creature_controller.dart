@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 class CreatureController {
   final creatureService = Get.find<CreatureService>();
 
-  RxList<Creature> creatures;
+  RxList<Creature> creatures = <Creature>[].obs;
 
-  CreatureController() : creatures = RxList.empty(growable: true) {
+  CreatureController() {
     creatures.value = creatureService.creatures;
   }
 
@@ -17,6 +17,7 @@ class CreatureController {
   void addCreature(Creature creature) {
     creatures.add(creature);
     creatureService.addCreature(creature);
+    creatures.refresh();
   }
 
   void updateCreature(Creature creature) {
@@ -26,6 +27,7 @@ class CreatureController {
         )
         .copy(creature);
     creatureService.updateCreature(creature);
+    creatures.refresh();
   }
 
   deleteCreature(Creature creature) {
